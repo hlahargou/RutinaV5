@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=no, maximum-scale=1">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="RUTINA">
+<meta name="theme-color" content="#0e0f11">
+<title>RUTINA</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Syne:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0e0f11;
+  --bg2: #16181c;
+  --bg3: #1e2026;
+  --border: #2a2d35;
+  --text: #e8eaf0;
+  --muted: #6b7080;
+  --accent: #c8f060;
+  --accent-dim: #8aaa2a;
+  --accent-bg: #1e2a08;
+  --done: #152009;
+  --done-border: #4a7a14;
+  --red: #f06060;
+  --radius: 10px;
+  --font-head: 'Syne', sans-serif;
+  --font-mono: 'DM Mono', monospace;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; -webkit-touch-callout: none; }
+body { background: var(--bg); color: var(--text); font-family: var(--font-mono); min-height: 100vh; overflow-x: hidden; -webkit-user-select: none; user-select: none; -webkit-font-smoothing: antialiased; }
+
+.app-header { padding: 12px 14px 10px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid var(--border); position: sticky; top: 0; background: var(--bg); z-index: 50; }
+.app-title { font-family: var(--font-head); font-size: 18px; font-weight: 700; letter-spacing: -0.5px; color: var(--accent); }
+.app-date { font-size: 11px; color: var(--muted); }
+
+.content { padding: 12px 12px 80px; }
+
+.pills { display: flex; gap: 6px; margin-bottom: 10px; overflow-x: auto; padding-bottom: 4px; }
+.pill { padding: 6px 10px; background: var(--bg2); border: 1px solid var(--border); border-radius: 6px; color: var(--muted); font-size: 10px; cursor: pointer; white-space: nowrap; transition: all 0.15s; }
+.pill.active { background: var(--accent-bg); border-color: var(--accent-dim); color: var(--accent); }
+
+.day-info { background: var(--bg2); border: 1px solid var(--border); border-radius: 8px; padding: 10px; margin-bottom: 10px; font-size: 11px; }
+.day-title { color: var(--accent); font-weight: 600; margin-bottom: 2px; }
+.day-sub { color: var(--muted); font-size: 10px; }
+
+.section { margin-bottom: 12px; }
+.section-title { color: var(--accent-dim); font-size: 10px; font-weight: 600; margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.5px; }
+
+.exercise { background: var(--bg2); border: 1px solid var(--border); border-radius: 8px; margin-bottom: 8px; overflow: hidden; }
+.ex-header { padding: 10px; cursor: pointer; display: flex; align-items: center; justify-content: space-between; }
+.ex-name { font-size: 12px; font-weight: 600; color: var(--text); }
+.ex-arrow { color: var(--accent); transition: transform 0.2s; font-size: 14px; }
+.exercise.collapsed .ex-arrow { transform: rotate(-90deg); }
+
+.ex-meta { padding: 0 10px; display: flex; gap: 8px; font-size: 9px; color: var(--muted); margin-bottom: 8px; }
+.ex-meta span { background: var(--bg3); padding: 3px 6px; border-radius: 4px; }
+
+.ex-tip { padding: 0 10px 10px; font-size: 9px; color: var(--muted); line-height: 1.3; border-left: 2px solid var(--accent-dim); padding-left: 8px; }
+
+.series-wrap { padding: 10px; border-top: 1px solid var(--border); }
+.series { margin-bottom: 8px; }
+.series-label { font-size: 10px; color: var(--muted); margin-bottom: 4px; }
+
+.serie-boxes { display: grid; grid-template-columns: repeat(2, 1fr); gap: 6px; margin-bottom: 6px; }
+.box { background: var(--bg3); border: 1px solid var(--border); border-radius: 6px; padding: 8px; text-align: center; cursor: pointer; transition: all 0.15s; }
+.box input { width: 100%; background: transparent; border: none; color: var(--text); text-align: center; font-size: 11px; font-family: var(--font-mono); }
+.box input:focus { outline: none; }
+.box.done { background: var(--done); border-color: var(--done-border); color: var(--accent); }
+
+.ex-hist { padding: 10px; border-top: 1px solid var(--border); font-size: 9px; color: var(--muted); }
+
+.bottom-nav { position: fixed; bottom: 0; left: 0; right: 0; background: var(--bg); border-top: 1px solid var(--border); padding: 8px 12px; display: flex; gap: 6px; z-index: 50; }
+.nav-btn { flex: 1; padding: 10px; background: var(--bg2); border: 1px solid var(--border); border-radius: 8px; color: var(--muted); font-size: 10px; font-family: var(--font-mono); cursor: pointer; text-align: center; transition: all 0.15s; }
+.nav-btn.active { background: var(--accent-bg); border-color: var(--accent-dim); color: var(--accent); }
+
+.hist-entry { background: var(--bg2); border: 1px solid var(--border); border-radius: 8px; padding: 10px; margin-bottom: 8px; cursor: pointer; }
+.hist-date { color: var(--accent); font-weight: 600; font-size: 11px; margin-bottom: 6px; }
+.hist-detail { font-size: 9px; color: var(--muted); }
+
+.exercise.collapsed .ex-meta,
+.exercise.collapsed .ex-tip,
+.exercise.collapsed .series-wrap,
+.exercise.collapsed .ex-hist { display: none; }
+</style>
+</head>
+<body>
+
+<div class="app-header">
+  <div class="app-title">RUTINA</div>
+  <div class="app-date" id="hdr-date"></div>
+</div>
+
+<div class="content" id="main-view">
+  <div class="pills" id="pills"></div>
+  <div id="day-container"></div>
+</div>
+
+<div class="bottom-nav">
+  <button class="nav-btn active" id="btn-train" onclick="switchView('train')">Entrenar</button>
+  <button class="nav-btn" id="btn-hist" onclick="switchView('hist')">Historial</button>
+</div>
+
+<script>
+const WEIGHTS = [2.5,3,4,5,6,7.5,10,12.5,15,17.5,20,22.5,25,27.5,30,32.5,35,40,45,50];
+const REPS_OPT = [5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,25,30];
+
+let expandedEx = null;
+
+const DAYS = [
+  { id:'d1', label:'Día 1', tag:'Pecho + Hombros', sub:'Hipertrofia · Tempo controlado', sections:[
+    { t:'Pecho', ex:[
+      { id:'e1', nm:'Press inclinado', sets:4, reps:'12·15·15·15', tempo:'3-1-1', dw:37, note:'Banco a 30-45°. Bajada en 3 segundos controlados. Mancuernas o barra. Escápulas retraídas. Codos a 45° del torso.' },
+      { id:'e2', nm:'Aperturas con mancuernas', sets:3, reps:'15·20·20', tempo:'—', dw:10, note:'Codo con flexión fija ~15°. Movimiento controlado, imaginá abrazar un barril. La bajada es el trabajo real.' },
+      { id:'e3', nm:'Flexiones diamante', sets:3, reps:'máx técnico', tempo:'—', dw:null, note:'Manos juntas formando diamante. Codos pegados al torso. Al fallo técnico, no fuerza bruta.' },
+    ]},
+    { t:'Hombros', ex:[
+      { id:'e4', nm:'Press militar', sets:3, reps:'12·15·15', tempo:'—', dw:20, note:'Agarre a ancho de hombros. Barra baja hasta mentón. Core y glúteos apretados. De pie o sentado.' },
+      { id:'e5', nm:'Elevaciones laterales', sets:4, reps:'15·20·20·20', tempo:'—', dw:7.5, note:'Codo ligeramente doblado. Movimiento desde el hombro. Paralelo al suelo. Última serie en drop-set.' },
+    ]},
+  ]},
+  { id:'d2', label:'Día 2', tag:'Metabólico A', sub:'Énfasis Cuádriceps · 4-5 rondas · 45s descanso', sections:[
+    { t:'Circuito (4-5 rondas)', ex:[
+      { id:'e1', nm:'Sentadilla Goblet', sets:4, reps:'15·20·20·20', tempo:'—', dw:20, note:'Peso al pecho. Profundidad completa. Rodillas siguen línea de dedos. 4-5 rondas con 45s descanso.' },
+      { id:'e2', nm:'Press de pecho', sets:4, reps:'15·15·15·15', tempo:'—', dw:37, note:'Manos al nivel del pecho. Codos a 45°. Repeticiones controladas. Parte del circuito metabólico.' },
+      { id:'e3', nm:'Estocadas alternas', sets:4, reps:'20 pasos', tempo:'—', dw:10, note:'20 pasos totales. Mancuernas a los lados. Rodilla trasera casi al piso. Alternancia fluida.' },
+      { id:'e4', nm:'Remo unilateral', sets:4, reps:'12·15·15·15', tempo:'—', dw:10, note:'Una mancuerna por lado. Codo hacia atrás y arriba. Escápula retraída en la cima.' },
+      { id:'e5', nm:'Elevaciones laterales', sets:4, reps:'15·15·15·15', tempo:'—', dw:7.5, note:'Deltoides medio. Codo doblado. Paralelo al suelo. Dentro del circuito metabólico.' },
+    ]},
+  ]},
+  { id:'d3', label:'Día 3', tag:'Espalda + Bíceps + Isquios', sub:'Tracción y flexión', sections:[
+    { t:'Espalda', ex:[
+      { id:'e1', nm:'Remo Barra con pecho apoyado', sets:4, reps:'12·15·15·15', tempo:'—', dw:20, note:'Pecho en banco inclinado. Barra desliza por el cuerpo. Codos abiertos. Escápula retraída en la cima.' },
+      { id:'e2', nm:'Peso Muerto Rumano (RDL)', sets:4, reps:'15·15·15·15', tempo:'—', dw:37, note:'Bisagra pura de cadera. Empuja caderas atrás. Espalda neutral. Barra desliza por muslos.' },
+      { id:'e3', nm:'Pullover con mancuerna', sets:3, reps:'15·15·15', tempo:'—', dw:12.5, note:'Tumbado perpendicular al banco. Brazos semi-extendidos. Movimiento en arco. Estiramiento máximo.' },
+    ]},
+    { t:'Bíceps', ex:[
+      { id:'e4', nm:'Curl de bíceps', sets:3, reps:'12·15·15', tempo:'—', dw:10, note:'Codos pegados al torso. Movimiento controlado. Bajada lenta 2-3 segundos. Contracción en la cima.' },
+    ]},
+    { t:'Isquios', ex:[
+      { id:'e5', nm:'Curl de isquios con mancuerna', sets:3, reps:'15·20·20', tempo:'—', dw:10, note:'Mancuerna entre los pies. Subida y bajada lenta. Excéntrico es el trabajo. Caderas en el banco.' },
+    ]},
+  ]},
+  { id:'d4', label:'Día 4', tag:'Piernas Heavy', sub:'Fuerza + Hipertrofia · Énfasis glúteo', sections:[
+    { t:'Piernas', ex:[
+      { id:'e1', nm:'Sentadilla Búlgara', sets:4, reps:'12·12·12·12', tempo:'—', dw:7.5, note:'Pie trasero en banco. Torso erguido = más cuádriceps. Bajada hasta rodilla trasera casi al suelo. Por pierna.' },
+      { id:'e2', nm:'Hip Thrust', sets:4, reps:'15·20·20·20', tempo:'2s pausa', dw:45, note:'Espalda en banco. Barbilla neutral. Caderas paralelas. Pausa de 2 segundos arriba. Squeeze máximo.' },
+      { id:'e3', nm:'Sissy Squat o extensiones con banda', sets:3, reps:'15·20·20', tempo:'—', dw:null, note:'Sissy: torso atrás, rodillas adelante. O extensiones con banda. Cuádriceps anterior puro. Control total.' },
+      { id:'e4', nm:'Elevación de talones', sets:4, reps:'20·20·20·20', tempo:'—', dw:null, note:'Pantorrillas. Ideal unilateral. 4 series de 20 reps. Pausa de 1 segundo arriba.' },
+    ]},
+    { t:'Core', ex:[
+      { id:'e5', nm:'Plancha abdominal + Deadbug', sets:3, reps:'30-60s + 12', tempo:'—', dw:null, note:'Plancha: línea recta. Glúteos apretados. Deadbug: alterno brazos y piernas. 3 series sin pausa.' },
+    ]},
+  ]},
+  { id:'d5', label:'Día 5', tag:'Metabólico B', sub:'Full Body + Pecho · 4-5 rondas · 45s descanso', sections:[
+    { t:'Circuito (4-5 rondas)', ex:[
+      { id:'e1', nm:'Sentadilla Goblet profunda', sets:4, reps:'15·20·20·20', tempo:'1s pausa', dw:20, note:'Peso al pecho. Profundidad máxima. Pausa 1s abajo. 4-5 rondas con 45s descanso. Rango completo.' },
+      { id:'e2', nm:'Press de pecho', sets:4, reps:'15·15·15·15', tempo:'—', dw:37, note:'Repeticiones controladas. Parte del circuito metabólico. Énfasis volumen.' },
+      { id:'e3', nm:'Estocadas alternas', sets:4, reps:'20 pasos', tempo:'—', dw:10, note:'20 pasos totales. Mancuernas a los lados. Ritmo constante. Alternancia fluida sin pausa.' },
+      { id:'e4', nm:'Remo unilateral', sets:4, reps:'12·15·15·15', tempo:'—', dw:10, note:'Una mancuerna por lado. Codo hacia atrás y arriba. Dentro del circuito metabólico.' },
+      { id:'e5', nm:'Elevaciones laterales', sets:4, reps:'15·15·15·15', tempo:'—', dw:7.5, note:'Deltoides medio. Codo doblado. Paralelo al suelo. Último ejercicio del circuito.' },
+    ]},
+  ]},
+];
+
+// ── STATE ──────────────────────────────────────────────────────────────────
+let ST = {};
+try { ST = JSON.parse(localStorage.getItem('rutina_v2')) || {}; } catch(e) {}
+if (!ST.day) ST.day = 'd1';
+if (!ST.ser) ST.ser = {};
+if (!ST.hist) ST.hist = {};
+
+function save() { localStorage.setItem('rutina_v2', JSON.stringify(ST)); }
+
+function fmtDate(d) {
+  const days = ['dom','lun','mar','mié','jue','vie','sáb'];
+  const months = ['ene','feb','mar','abr','may','jun','jul','ago','sep','oct','nov','dic'];
+  return `${days[d.getDay()]} ${d.getDate()} ${months[d.getMonth()]}`;
+}
+
+function getSer(did, eid, idx, dw) {
+  if (!ST.ser[did]) ST.ser[did] = {};
+  if (!ST.ser[did][eid]) ST.ser[did][eid] = {};
+  if (!ST.ser[did][eid][idx]) {
+    const weight = (dw !== null && dw !== undefined) ? dw : 0;
+    ST.ser[did][eid][idx] = { done: false, w: weight, r: 12 };
+  }
+  return ST.ser[did][eid][idx];
+}
+
+function togEx(exId) {
+  if (expandedEx === exId) {
+    expandedEx = null;
+    document.querySelectorAll('.exercise').forEach(e => e.classList.add('collapsed'));
+  } else {
+    expandedEx = exId;
+    document.querySelectorAll('.exercise').forEach(e => {
+      if (e.dataset.exId === exId) e.classList.remove('collapsed');
+      else e.classList.add('collapsed');
+    });
+  }
+}
+
+function renderPills() {
+  const pills = document.getElementById('pills');
+  pills.innerHTML = DAYS.map(d => 
+    `<button class="pill ${d.id === ST.day ? 'active' : ''}" onclick="ST.day='${d.id}'; save(); renderMain();">${d.label}</button>`
+  ).join('');
+}
+
+function exComplete(did, eid, sets) {
+  const exSets = ST.ser[did]?.[eid] || {};
+  const allDone = Object.keys(exSets).length === sets && Object.values(exSets).every(s => s.done);
+  if (!allDone) {
+    for (let i = 0; i < sets; i++) {
+      const ser = getSer(did, eid, i, null);
+      ser.done = true;
+    }
+  }
+  save();
+  renderMain();
+}
+
+function renderEx(day, section, exercise) {
+  const did = day.id;
+  const exId = exercise.id;
+  const sets = Array.from({length: exercise.sets}, (_, i) => getSer(did, exId, i, exercise.dw));
+  const allDone = sets.every(s => s.done);
+  
+  let repsArr = exercise.reps.split('·');
+  
+  let html = `
+    <div class="exercise ${expandedEx === exId ? '' : 'collapsed'}" data-ex-id="${exId}" onclick="event.stopPropagation()">
+      <div class="ex-header" onclick="togEx('${exId}'); event.stopPropagation();">
+        <div class="ex-name">${exercise.nm}</div>
+        <div class="ex-arrow">▼</div>
+      </div>
+      <div class="ex-meta">
+        <span>${exercise.sets}×${exercise.reps}</span>
+        ${exercise.dw ? `<span>${exercise.dw}kg</span>` : ''}
+        ${exercise.tempo !== '—' ? `<span>${exercise.tempo}</span>` : ''}
+      </div>
+      <div class="ex-tip">${exercise.note}</div>
+      <div class="series-wrap">
+  `;
+  
+  sets.forEach((ser, idx) => {
+    const reps = repsArr[idx] || repsArr[repsArr.length - 1];
+    const isDone = ser.done;
+    const weightDisplay = exercise.dw ? `${exercise.dw}kg` : (exercise.nm.includes('Estocadas') ? '10kg c/lado' : 'sin peso');
+    
+    html += `
+      <div class="series">
+        <div class="series-label">Serie ${idx + 1} (${reps})</div>
+        <div class="serie-boxes">
+          <div class="box" onclick="event.stopPropagation()">
+            <input type="number" value="${ser.w}" placeholder="0" onchange="(function() { ST.ser['${did}']['${exId}'][${idx}].w = +this.value; save(); renderMain(); }).call(this);" min="0">
+          </div>
+          <div class="box" style="cursor:pointer;" onclick="(function() { ST.ser['${did}']['${exId}'][${idx}].done = !ST.ser['${did}']['${exId}'][${idx}].done; save(); renderMain(); }).call(this); event.stopPropagation();">
+            ${isDone ? '✓' : '○'}
+          </div>
+        </div>
+      </div>
+    `;
+  });
+  
+  html += `</div></div>`;
+  
+  return html;
+}
+
+function renderMain() {
+  const day = DAYS.find(d => d.id === ST.day);
+  let html = `
+    <div class="day-info">
+      <div class="day-title">${day.tag}</div>
+      <div class="day-sub">${day.sub}</div>
+    </div>
+  `;
+  
+  day.sections.forEach(section => {
+    html += `<div class="section"><div class="section-title">${section.t}</div>`;
+    section.ex.forEach(ex => {
+      html += renderEx(day, section, ex);
+    });
+    html += `</div>`;
+  });
+  
+  document.getElementById('day-container').innerHTML = html;
+}
+
+function switchView(view) {
+  document.getElementById('main-view').style.display = view === 'train' ? 'block' : 'none';
+  document.getElementById('btn-train').classList.toggle('active', view === 'train');
+  document.getElementById('btn-hist').classList.toggle('active', view === 'hist');
+}
+
+// ── INIT ───────────────────────────────────────────────────────────────────
+document.getElementById('hdr-date').textContent = fmtDate(new Date());
+renderPills();
+renderMain();
+</script>
+
+</body>
+</html>
