@@ -204,14 +204,16 @@ function updateJSON() {
   
   DAYS_DATA.ultima_actualizacion = hoy;
   
-  // Actualizar Gist
+  // Actualizar Gist con autenticación
   const gistId = '3d42a7018719d4e9360f89434e1f0d07';
   const gistUrl = `https://api.github.com/gists/${gistId}`;
+  const token = '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';
   
   fetch(gistUrl, {
     method: 'PATCH',
     headers: {
       'Content-Type': 'application/json',
+      'Authorization': `token ${token}`
     },
     body: JSON.stringify({
       files: {
@@ -228,7 +230,9 @@ function updateJSON() {
       updateBottomNav();
       alert('✓ Datos actualizados en el Gist automáticamente.');
     } else {
-      alert('⚠ El Gist debe ser público y sin protección. Verifica en https://gist.github.com');
+      return response.json().then(err => {
+        throw new Error(err.message || 'Error desconocido');
+      });
     }
   })
   .catch(error => {
