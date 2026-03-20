@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=no, maximum-scale=1">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="RutinaJGemini">
+<meta name="theme-color" content="#0e0f11">
+<title>RutinaJGemini</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Syne:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0e0f11;
+  --bg2: #16181c;
+  --bg3: #1e2026;
+  --border: #2a2d35;
+  --text: #e8eaf0;
+  --muted: #6b7080;
+  --accent: #c8f060;
+  --accent-dim: #8aaa2a;
+  --accent-bg: #1e2a08;
+  --done: #152009;
+  --done-border: #4a7a14;
+  --red: #f06060;
+  --radius: 10px;
+  --font-head: 'Syne', sans-serif;
+  --font-mono: 'DM Mono', monospace;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; -webkit-touch-callout: none; }
+body { background: var(--bg); color: var(--text); font-family: var(--font-mono); min-height: 100vh; overflow-x: hidden; -webkit-user-select: none; user-select: none; -webkit-font-smoothing: antialiased; }
+
+.app-header { padding: 12px 14px 10px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid var(--border); position: sticky; top: 0; background: var(--bg); z-index: 50; }
+.app-title { font-family: var(--font-head); font-size: 18px; font-weight: 700; letter-spacing: -0.5px; color: var(--accent); }
+.app-date { font-size: 11px; color: var(--muted); }
+
+.content { padding: 12px 12px 80px; }
+
+.pills { display: flex; gap: 6px; margin-bottom: 10px; overflow-x: auto; padding-bottom: 4px; }
+.pill { padding: 6px 10px; background: var(--bg2); border: 1px solid var(--border); border-radius: 6px; color: var(--muted); font-size: 10px; cursor: pointer; white-space: nowrap; transition: all 0.15s; }
+.pill.active { background: var(--accent-bg); border-color: var(--accent-dim); color: var(--accent); }
+
+.day-info { background: var(--bg2); border: 1px solid var(--border); border-radius: 8px; padding: 10px; margin-bottom: 10px; font-size: 11px; }
+.day-title { color: var(--accent); font-weight: 600; margin-bottom: 2px; }
+.day-sub { color: var(--muted); font-size: 10px; }
+
+.section { margin-bottom: 12px; }
+.section-title { color: var(--accent-dim); font-size: 10px; font-weight: 600; margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.5px; }
+
+.exercise { background: var(--bg2); border: 1px solid var(--border); border-radius: 8px; margin-bottom: 8px; overflow: hidden; }
+.ex-header { padding: 10px; cursor: pointer; display: flex; align-items: center; justify-content: space-between; }
+.ex-name { font-size: 12px; font-weight: 600; color: var(--text); }
+.ex-arrow { color: var(--accent); transition: transform 0.2s; font-size: 14px; }
+.exercise.collapsed .ex-arrow { transform: rotate(-90deg); }
+
+.ex-meta { padding: 0 10px; display: flex; gap: 8px; font-size: 9px; color: var(--muted); margin-bottom: 8px; }
+.ex-meta span { background: var(--bg3); padding: 3px 6px; border-radius: 4px; }
+
+.series-wrap { padding: 10px; border-top: 1px solid var(--border); }
+.series { margin-bottom: 8px; }
+.series-label { font-size: 10px; color: var(--muted); margin-bottom: 4px; }
+
+.serie-boxes { display: grid; grid-template-columns: repeat(2, 1fr); gap: 6px; margin-bottom: 6px; }
+.box { background: var(--bg3); border: 1px solid var(--border); border-radius: 6px; padding: 8px; text-align: center; cursor: pointer; transition: all 0.15s; }
+.box input { width: 100%; background: transparent; border: none; color: var(--text); text-align: center; font-size: 11px; font-family: var(--font-mono); }
+.box input:focus { outline: none; }
+.box.done { background: var(--done); border-color: var(--done-border); color: var(--accent); }
+
+.bottom-nav { position: fixed; bottom: 0; left: 0; right: 0; background: var(--bg); border-top: 1px solid var(--border); padding: 8px 12px; display: flex; gap: 6px; z-index: 50; }
+.nav-btn { flex: 1; padding: 10px; background: var(--bg2); border: 1px solid var(--border); border-radius: 8px; color: var(--muted); font-size: 10px; font-family: var(--font-mono); cursor: pointer; text-align: center; transition: all 0.15s; }
+.nav-btn.active { background: var(--accent-bg); border-color: var(--accent-dim); color: var(--accent); }
+
+.exercise.collapsed .ex-meta,
+.exercise.collapsed .series-wrap { display: none; }
+
+.loading { text-align: center; padding: 20px; color: var(--muted); }
+</style>
+</head>
+<body>
+
+<div class="app-header">
+  <div class="app-title">RutinaJGemini</div>
+  <div class="app-date" id="hdr-date"></div>
+</div>
+
+<div class="content" id="main-view">
+  <div class="pills" id="pills"></div>
+  <div id="day-container"></div>
+</div>
+
+<div class="bottom-nav">
+  <button class="nav-btn active" id="btn-train" onclick="switchView('train')">Entrenar</button>
+</div>
+
+<script>
+let DAYS_DATA = null;
+let expandedEx = null;
+let ST = {};
+
+// ── CARGAR DATOS JSON ──────────────────────────────────────────────────────
+async function loadData() {
+  try {
+    const response = await fetch('datos-gemini.json');
+    if (!response.ok) throw new Error('No se pudo cargar datos-gemini.json');
+    DAYS_DATA = await response.json();
+    console.log('✓ Datos cargados:', DAYS_DATA.rutina);
+    init();
+  } catch (error) {
+    console.error('Error cargando JSON:', error);
+    document.getElementById('day-container').innerHTML = `
+      <div class="loading">
+        <p style="color:var(--red);">⚠ Error cargando datos</p>
+        <p style="font-size:10px;margin-top:10px;">${error.message}</p>
+      </div>
+    `;
+  }
+}
+
+// ── STATE ──────────────────────────────────────────────────────────────────
+try { ST = JSON.parse(localStorage.getItem('rutina-gemini')) || {}; } catch(e) {}
+if (!ST.day) ST.day = 'd1';
+if (!ST.ser) ST.ser = {};
+
+function save() { localStorage.setItem('rutina-gemini', JSON.stringify(ST)); }
+
+function fmtDate(d) {
+  const days = ['dom','lun','mar','mié','jue','vie','sáb'];
+  const months = ['ene','feb','mar','abr','may','jun','jul','ago','sep','oct','nov','dic'];
+  return `${days[d.getDay()]} ${d.getDate()} ${months[d.getMonth()]}`;
+}
+
+function getSer(did, eid, idx, dw) {
+  if (!ST.ser[did]) ST.ser[did] = {};
+  if (!ST.ser[did][eid]) ST.ser[did][eid] = {};
+  if (!ST.ser[did][eid][idx]) {
+    const weight = (dw !== null && dw !== undefined) ? dw : 0;
+    ST.ser[did][eid][idx] = { done: false, w: weight, r: 12 };
+  }
+  return ST.ser[did][eid][idx];
+}
+
+function togEx(exId) {
+  if (expandedEx === exId) {
+    expandedEx = null;
+    document.querySelectorAll('.exercise').forEach(e => e.classList.add('collapsed'));
+  } else {
+    expandedEx = exId;
+    document.querySelectorAll('.exercise').forEach(e => {
+      if (e.dataset.exId === exId) e.classList.remove('collapsed');
+      else e.classList.add('collapsed');
+    });
+  }
+}
+
+function renderPills() {
+  const pills = document.getElementById('pills');
+  const daysKeys = Object.keys(DAYS_DATA.ejercicios);
+  pills.innerHTML = daysKeys.map(key => {
+    const dayData = DAYS_DATA.ejercicios[key];
+    return `<button class="pill ${key === ST.day ? 'active' : ''}" onclick="ST.day='${key}'; save(); renderMain();">${dayData.label}</button>`;
+  }).join('');
+}
+
+function renderEx(dayKey, exercise) {
+  const did = dayKey;
+  const exId = exercise.id;
+  const sets = 4;
+  const seriesArray = Array.from({length: sets}, (_, i) => getSer(did, exId, i, exercise.peso_default));
+  const isDone = seriesArray.every(s => s.done);
+  
+  let html = `
+    <div class="exercise collapsed" data-ex-id="${exId}" onclick="event.stopPropagation()">
+      <div class="ex-header" onclick="togEx('${exId}'); event.stopPropagation();">
+        <div class="ex-name">${exercise.nombre}</div>
+        <div class="ex-arrow">▼</div>
+      </div>
+      <div class="ex-meta">
+        ${exercise.peso_default ? `<span>${exercise.peso_default}kg</span>` : '<span>sin peso</span>'}
+        ${exercise.historico && exercise.historico.length > 0 ? `<span>Hist: ${exercise.historico[exercise.historico.length-1]}kg</span>` : ''}
+      </div>
+      <div class="series-wrap">
+  `;
+  
+  seriesArray.forEach((ser, idx) => {
+    html += `
+      <div class="series">
+        <div class="series-label">Serie ${idx + 1}</div>
+        <div class="serie-boxes">
+          <div class="box" onclick="event.stopPropagation()">
+            <input type="number" value="${ser.w}" placeholder="0" onchange="(function() { ST.ser['${did}']['${exId}'][${idx}].w = +this.value; save(); renderMain(); }).call(this);" min="0">
+          </div>
+          <div class="box" style="cursor:pointer;" onclick="(function() { ST.ser['${did}']['${exId}'][${idx}].done = !ST.ser['${did}']['${exId}'][${idx}].done; save(); renderMain(); }).call(this); event.stopPropagation();">
+            ${ser.done ? '✓' : '○'}
+          </div>
+        </div>
+      </div>
+    `;
+  });
+  
+  html += `</div></div>`;
+  
+  return html;
+}
+
+function renderMain() {
+  const dayKey = ST.day;
+  const dayData = DAYS_DATA.ejercicios[dayKey];
+  
+  let html = `
+    <div class="day-info">
+      <div class="day-title">${dayData.tag}</div>
+      ${dayData.sub ? `<div class="day-sub">${dayData.sub}</div>` : ''}
+    </div>
+  `;
+  
+  dayData.ejercicios.forEach(exercise => {
+    html += renderEx(dayKey, exercise);
+  });
+  
+  document.getElementById('day-container').innerHTML = html;
+}
+
+function switchView(view) {
+  document.getElementById('main-view').style.display = view === 'train' ? 'block' : 'none';
+  document.getElementById('btn-train').classList.toggle('active', view === 'train');
+}
+
+function init() {
+  document.getElementById('hdr-date').textContent = fmtDate(new Date());
+  renderPills();
+  renderMain();
+}
+
+// Cargar datos al inicio
+loadData();
+</script>
+
+</body>
+</html>

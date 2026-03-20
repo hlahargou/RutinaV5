@@ -1,0 +1,67 @@
+{
+  "rutina": "RutinaJGemini",
+  "descripcion": "Rutina mejorada con circuitos metabólicos y énfasis en glúteos",
+  "ejercicios": {
+    "d1": {
+      "label": "Día 1",
+      "tag": "Pecho + Hombros",
+      "sub": "Hipertrofia · Tempo controlado",
+      "ejercicios": [
+        { "id": "e1", "nombre": "Press inclinado", "peso_default": 37, "historico": [37, 37, 37, 37] },
+        { "id": "e2", "nombre": "Aperturas con mancuernas", "peso_default": 10, "historico": [10, 10, 10] },
+        { "id": "e3", "nombre": "Flexiones diamante", "peso_default": null, "historico": [] },
+        { "id": "e4", "nombre": "Press militar", "peso_default": 20, "historico": [20, 20, 20] },
+        { "id": "e5", "nombre": "Elevaciones laterales", "peso_default": 7.5, "historico": [7.5, 7.5, 7.5, 7.5] }
+      ]
+    },
+    "d2": {
+      "label": "Día 2",
+      "tag": "Metabólico A",
+      "sub": "Énfasis Cuádriceps · 4-5 rondas · 45s descanso",
+      "ejercicios": [
+        { "id": "e1", "nombre": "Sentadilla Goblet", "peso_default": 20, "historico": [20, 20, 20, 20] },
+        { "id": "e2", "nombre": "Press de pecho", "peso_default": 37, "historico": [37, 37, 37, 37] },
+        { "id": "e3", "nombre": "Estocadas alternas", "peso_default": 10, "historico": [10, 10, 10, 10] },
+        { "id": "e4", "nombre": "Remo unilateral", "peso_default": 10, "historico": [10, 10, 10, 10] },
+        { "id": "e5", "nombre": "Elevaciones laterales", "peso_default": 7.5, "historico": [7.5, 7.5, 7.5, 7.5] }
+      ]
+    },
+    "d3": {
+      "label": "Día 3",
+      "tag": "Espalda + Bíceps + Isquios",
+      "sub": "Tracción y flexión",
+      "ejercicios": [
+        { "id": "e1", "nombre": "Remo Barra con pecho apoyado", "peso_default": 20, "historico": [20, 20, 20, 20] },
+        { "id": "e2", "nombre": "Peso Muerto Rumano (RDL)", "peso_default": 37, "historico": [37, 37, 37, 37] },
+        { "id": "e3", "nombre": "Pullover con mancuerna", "peso_default": 12.5, "historico": [12.5, 12.5, 12.5] },
+        { "id": "e4", "nombre": "Curl de bíceps", "peso_default": 10, "historico": [10, 10, 10] },
+        { "id": "e5", "nombre": "Curl de isquios con mancuerna", "peso_default": 10, "historico": [10, 10, 10] }
+      ]
+    },
+    "d4": {
+      "label": "Día 4",
+      "tag": "Piernas Heavy",
+      "sub": "Fuerza + Hipertrofia · Énfasis glúteo",
+      "ejercicios": [
+        { "id": "e1", "nombre": "Sentadilla Búlgara", "peso_default": 7.5, "historico": [7.5, 7.5, 7.5, 7.5] },
+        { "id": "e2", "nombre": "Hip Thrust", "peso_default": 45, "historico": [45, 45, 45, 45] },
+        { "id": "e3", "nombre": "Sissy Squat o extensiones con banda", "peso_default": null, "historico": [] },
+        { "id": "e4", "nombre": "Elevación de talones", "peso_default": null, "historico": [] },
+        { "id": "e5", "nombre": "Plancha abdominal + Deadbug", "peso_default": null, "historico": [] }
+      ]
+    },
+    "d5": {
+      "label": "Día 5",
+      "tag": "Metabólico B",
+      "sub": "Full Body + Pecho · 4-5 rondas · 45s descanso",
+      "ejercicios": [
+        { "id": "e1", "nombre": "Sentadilla Goblet profunda", "peso_default": 20, "historico": [20, 20, 20, 20] },
+        { "id": "e2", "nombre": "Press de pecho", "peso_default": 37, "historico": [37, 37, 37, 37] },
+        { "id": "e3", "nombre": "Estocadas alternas", "peso_default": 10, "historico": [10, 10, 10, 10] },
+        { "id": "e4", "nombre": "Remo unilateral", "peso_default": 10, "historico": [10, 10, 10, 10] },
+        { "id": "e5", "nombre": "Elevaciones laterales", "peso_default": 7.5, "historico": [7.5, 7.5, 7.5, 7.5] }
+      ]
+    }
+  },
+  "ultima_actualizacion": "2025-03-20"
+}

@@ -1,0 +1,74 @@
+{
+  "rutina": "RutinaJClaude",
+  "descripcion": "Rutina original con énfasis en pecho y desarrollo balanceado",
+  "ejercicios": {
+    "d1": {
+      "label": "Día 1",
+      "tag": "Pecho + Tríceps",
+      "ejercicios": [
+        { "id": "e1", "nombre": "Press barra plano", "peso_default": 30, "historico": [30, 30, 28, 30] },
+        { "id": "e2", "nombre": "Press mancuernas inclinado", "peso_default": 10, "historico": [10, 10, 10, 10] },
+        { "id": "e3", "nombre": "Aperturas mancuernas plano", "peso_default": 10, "historico": [10, 10, 10] },
+        { "id": "e4", "nombre": "Fondos en barra", "peso_default": null, "historico": [] },
+        { "id": "e5", "nombre": "Extensión tríceps sobre cabeza", "peso_default": 7.5, "historico": [7.5, 7.5, 7.5] },
+        { "id": "e6", "nombre": "Kickback mancuerna", "peso_default": 7.5, "historico": [7.5, 7.5, 7.5] }
+      ]
+    },
+    "d2": {
+      "label": "Día 2",
+      "tag": "Espalda + Bíceps",
+      "ejercicios": [
+        { "id": "e1", "nombre": "Dominadas chin-up", "peso_default": null, "historico": [] },
+        { "id": "e2", "nombre": "Dominadas agarre prono/neutro", "peso_default": null, "historico": [] },
+        { "id": "e3", "nombre": "Remo mancuerna unilateral", "peso_default": 10, "historico": [10, 10, 10, 10] },
+        { "id": "e4", "nombre": "Jalón lat con banda", "peso_default": null, "historico": [] },
+        { "id": "e5", "nombre": "Pull-over con mancuerna", "peso_default": 12.5, "historico": [12.5, 12.5, 12.5] },
+        { "id": "e6", "nombre": "Curl con barra", "peso_default": 20, "historico": [20, 20, 20] },
+        { "id": "e7", "nombre": "Curl martillo alternado", "peso_default": 10, "historico": [10, 10, 10] },
+        { "id": "e8", "nombre": "Curl concentrado en banco", "peso_default": 10, "historico": [10, 10] }
+      ]
+    },
+    "d3": {
+      "label": "Día 3",
+      "tag": "Piernas + Core",
+      "ejercicios": [
+        { "id": "e1", "nombre": "Sentadilla con barra", "peso_default": 30, "historico": [30, 30, 30, 30] },
+        { "id": "e2", "nombre": "Sentadilla búlgara", "peso_default": 10, "historico": [10, 10, 10] },
+        { "id": "e3", "nombre": "Step-up al cajón", "peso_default": 7.5, "historico": [7.5, 7.5, 7.5] },
+        { "id": "e4", "nombre": "Peso muerto rumano", "peso_default": 30, "historico": [30, 30, 30, 30] },
+        { "id": "e5", "nombre": "Hip thrust con barra", "peso_default": 30, "historico": [30, 30, 30, 30] },
+        { "id": "e6", "nombre": "Curl isquio con mancuerna", "peso_default": 10, "historico": [10, 10, 10] },
+        { "id": "e7", "nombre": "Plancha frontal", "peso_default": null, "historico": [] },
+        { "id": "e8", "nombre": "Elevación piernas colgado", "peso_default": null, "historico": [] },
+        { "id": "e9", "nombre": "Crunch con mancuerna", "peso_default": 5, "historico": [5, 5, 5] }
+      ]
+    },
+    "d4": {
+      "label": "Día 4",
+      "tag": "Hombros + Trapecios",
+      "ejercicios": [
+        { "id": "e1", "nombre": "Press militar con barra", "peso_default": 20, "historico": [20, 20, 20, 20] },
+        { "id": "e2", "nombre": "Press Arnold", "peso_default": 10, "historico": [10, 10, 10] },
+        { "id": "e3", "nombre": "Elevación lateral mancuernas", "peso_default": 7.5, "historico": [7.5, 7.5, 7.5, 7.5] },
+        { "id": "e4", "nombre": "Elevación frontal", "peso_default": 7.5, "historico": [7.5, 7.5, 7.5] },
+        { "id": "e5", "nombre": "Pájaro", "peso_default": 7.5, "historico": [7.5, 7.5, 7.5] },
+        { "id": "e6", "nombre": "Encogimientos mancuernas", "peso_default": 10, "historico": [10, 10, 10] },
+        { "id": "e7", "nombre": "Remo al mentón", "peso_default": 10, "historico": [10, 10, 10] }
+      ]
+    },
+    "d5": {
+      "label": "Día 5",
+      "tag": "Full Body Funcional",
+      "ejercicios": [
+        { "id": "e1", "nombre": "Sentadilla + press overhead", "peso_default": 20, "historico": [20, 20, 20, 20] },
+        { "id": "e2", "nombre": "Saltos al cajón", "peso_default": null, "historico": [] },
+        { "id": "e3", "nombre": "Flexiones manos en banco", "peso_default": null, "historico": [] },
+        { "id": "e4", "nombre": "Jalón lat con banda", "peso_default": null, "historico": [] },
+        { "id": "e5", "nombre": "Plancha con elevación de pierna", "peso_default": null, "historico": [] },
+        { "id": "e6", "nombre": "Elevación piernas colgado", "peso_default": null, "historico": [] },
+        { "id": "e7", "nombre": "Russian twist con mancuerna", "peso_default": 10, "historico": [10, 10, 10] }
+      ]
+    }
+  },
+  "ultima_actualizacion": "2025-03-20"
+}
