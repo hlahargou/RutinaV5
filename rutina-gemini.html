@@ -65,13 +65,14 @@ body { background: var(--bg); color: var(--text); font-family: var(--font-mono);
 .series-label { font-size: 10px; color: var(--muted); margin-bottom: 4px; }
 .series.completed .series-label { color: var(--accent); }
 
-.serie-boxes { display: grid; grid-template-columns: repeat(2, 1fr); gap: 6px; margin-bottom: 6px; }
-.box { background: var(--bg3); border: 1px solid var(--border); border-radius: 6px; padding: 8px; text-align: center; cursor: pointer; transition: all 0.15s; }
-.box input { width: 100%; background: transparent; border: none; color: var(--text); text-align: center; font-size: 11px; font-family: var(--font-mono); }
+.serie-boxes { display: grid; grid-template-columns: 1fr 80px; gap: 6px; margin-bottom: 6px; }
+.box { background: var(--bg3); border: 1px solid var(--border); border-radius: 6px; padding: 10px; text-align: center; cursor: pointer; transition: all 0.15s; }
+.box input { width: 100%; background: transparent; border: none; color: var(--text); text-align: center; font-size: 12px; font-family: var(--font-mono); font-weight: 600; }
 .box input:focus { outline: none; }
 .box.done { background: var(--done); border-color: var(--done-border); color: var(--accent); }
-.box.check-btn { cursor: pointer; }
-.box.check-btn:active { transform: scale(0.95); }
+
+.check-btn { display: flex; align-items: center; justify-content: center; font-size: 28px; cursor: pointer; padding: 0; }
+.check-btn.active { color: var(--accent); }
 
 .bottom-nav { position: fixed; bottom: 0; left: 0; right: 0; background: var(--bg); border-top: 1px solid var(--border); padding: 8px 12px; display: flex; gap: 6px; z-index: 50; }
 .nav-btn { flex: 1; padding: 10px; background: var(--bg2); border: 1px solid var(--border); border-radius: 8px; color: var(--muted); font-size: 10px; font-family: var(--font-mono); cursor: pointer; text-align: center; transition: all 0.15s; }
@@ -194,7 +195,6 @@ function updateJSON() {
     }
   });
   
-  // Guardar estado de días completados
   if (!DAYS_DATA.diasCompletados) DAYS_DATA.diasCompletados = [];
   const hoy = new Date().toISOString().split('T')[0];
   const dayKey = ST.day;
@@ -228,7 +228,6 @@ if (!ST.ser) ST.ser = {};
 
 function save() { 
   localStorage.setItem('rutina-gemini', JSON.stringify(ST));
-  lastSavedState = JSON.stringify(ST);
   checkForChanges();
 }
 
@@ -310,8 +309,8 @@ function renderEx(dayKey, exercise) {
           <div class="box" onclick="event.stopPropagation()">
             <input type="number" value="${ser.w}" placeholder="0" onchange="(function() { ST.ser['${did}']['${exId}'][${idx}].w = +this.value; save(); renderMain(); }).call(this);" min="0">
           </div>
-          <div class="box check-btn ${isDone ? 'done' : ''}" style="cursor:pointer;" onclick="(function() { ST.ser['${did}']['${exId}'][${idx}].done = !ST.ser['${did}']['${exId}'][${idx}].done; save(); renderMain(); }).call(this); event.stopPropagation();">
-            ${isDone ? '✓' : '○'}
+          <div class="box check-btn ${isDone ? 'active' : ''}" onclick="(function() { ST.ser['${did}']['${exId}'][${idx}].done = !ST.ser['${did}']['${exId}'][${idx}].done; save(); renderMain(); }).call(this); event.stopPropagation();">
+            ${isDone ? '●' : '○'}
           </div>
         </div>
       </div>
