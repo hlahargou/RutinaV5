@@ -90,12 +90,15 @@ body { background: var(--bg); color: var(--text); font-family: var(--font-mono);
 
 <div class="bottom-nav">
   <button class="nav-btn active" id="btn-train" onclick="switchView('train')">Entrenar</button>
+  <button class="nav-btn" id="btn-update" style="display:none; background: var(--accent-bg); border-color: var(--accent-dim); color: var(--accent);" onclick="updateJSON()">Actualizar</button>
 </div>
 
 <script>
 let DAYS_DATA = null;
 let expandedEx = null;
 let ST = {};
+let lastSavedState = {};
+let hasChanges = false;
 
 // ── CARGAR DATOS JSON ──────────────────────────────────────────────────────
 async function loadData() {
@@ -116,12 +119,64 @@ async function loadData() {
   }
 }
 
+function checkForChanges() {
+  const currentState = JSON.stringify(ST);
+  if (currentState !== lastSavedState && lastSavedState !== '{}') {
+    hasChanges = true;
+    document.getElementById('btn-update').style.display = 'block';
+  }
+}
+
+function updateJSON() {
+  // Actualizar los pesos en DAYS_DATA con los valores de ST
+  Object.keys(ST.ser).forEach(dayKey => {
+    if (DAYS_DATA.ejercicios[dayKey]) {
+      DAYS_DATA.ejercicios[dayKey].ejercicios.forEach(exercise => {
+        if (ST.ser[dayKey] && ST.ser[dayKey][exercise.id]) {
+          const weights = ST.ser[dayKey][exercise.id];
+          const lastWeight = Math.max(...Object.values(weights).map(w => w.w).filter(w => w > 0));
+          if (lastWeight > 0) {
+            exercise.peso_default = lastWeight;
+            if (!exercise.historico) exercise.historico = [];
+            if (!exercise.historico.includes(lastWeight)) {
+              exercise.historico.push(lastWeight);
+            }
+          }
+        }
+      });
+    }
+  });
+  
+  DAYS_DATA.ultima_actualizacion = new Date().toISOString().split('T')[0];
+  
+  // Crear y descargar el archivo JSON
+  const dataStr = JSON.stringify(DAYS_DATA, null, 2);
+  const dataBlob = new Blob([dataStr], { type: 'application/json' });
+  const url = URL.createObjectURL(dataBlob);
+  const link = document.createElement('a');
+  link.href = url;
+  link.download = 'datos-gemini.json';
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+  URL.revokeObjectURL(url);
+  
+  hasChanges = false;
+  document.getElementById('btn-update').style.display = 'none';
+  lastSavedState = JSON.stringify(ST);
+  alert('✓ Archivo descargado. Sube datos-gemini.json a tu repositorio en GitHub.');
+}
+
 // ── STATE ──────────────────────────────────────────────────────────────────
 try { ST = JSON.parse(localStorage.getItem('rutina-gemini')) || {}; } catch(e) {}
 if (!ST.day) ST.day = 'd1';
 if (!ST.ser) ST.ser = {};
 
-function save() { localStorage.setItem('rutina-gemini', JSON.stringify(ST)); }
+function save() { 
+  localStorage.setItem('rutina-gemini', JSON.stringify(ST));
+  lastSavedState = JSON.stringify(ST);
+  checkForChanges();
+}
 
 function fmtDate(d) {
   const days = ['dom','lun','mar','mié','jue','vie','sáb'];
