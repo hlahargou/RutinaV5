@@ -286,9 +286,10 @@ function renderEx(dayKey, exercise) {
   const sets = 4;
   const seriesArray = Array.from({length: sets}, (_, i) => getSer(did, exId, i, exercise.peso_default));
   const allSeriesDone = seriesArray.every(s => s.done);
+  const isExpanded = expandedEx === exId;
   
   let html = `
-    <div class="exercise collapsed ${allSeriesDone ? 'completed' : ''}" data-ex-id="${exId}" onclick="event.stopPropagation()">
+    <div class="exercise ${isExpanded ? '' : 'collapsed'} ${allSeriesDone ? 'completed' : ''}" data-ex-id="${exId}" onclick="event.stopPropagation()">
       <div class="ex-header" onclick="togEx('${exId}'); event.stopPropagation();">
         <div class="ex-name">${exercise.nombre}</div>
         <div class="ex-arrow">▼</div>
@@ -330,6 +331,9 @@ function renderMain() {
   const dayData = DAYS_DATA.ejercicios[dayKey];
   const dayCompleted = checkDayCompletion();
   
+  // Guardar el ejercicio expandido actual ANTES de re-renderizar
+  const currentExpanded = expandedEx;
+  
   let html = `
     <div class="day-info ${dayCompleted ? 'completed' : ''}">
       <div class="day-title">${dayData.tag}</div>
@@ -342,6 +346,16 @@ function renderMain() {
   });
   
   document.getElementById('day-container').innerHTML = html;
+  
+  // Restaurar el estado de expansión
+  if (currentExpanded) {
+    expandedEx = currentExpanded;
+    const exElement = document.querySelector(`[data-ex-id="${currentExpanded}"]`);
+    if (exElement) {
+      exElement.classList.remove('collapsed');
+    }
+  }
+  
   updateBottomNav();
 }
 
