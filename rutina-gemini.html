@@ -65,14 +65,14 @@ body { background: var(--bg); color: var(--text); font-family: var(--font-mono);
 .series-label { font-size: 10px; color: var(--muted); margin-bottom: 4px; }
 .series.completed .series-label { color: var(--accent); }
 
-.serie-boxes { display: grid; grid-template-columns: 1fr 80px; gap: 6px; margin-bottom: 6px; }
+.serie-boxes { display: grid; grid-template-columns: 1fr 60px 80px; gap: 6px; margin-bottom: 6px; }
 .box { background: var(--bg3); border: 1px solid var(--border); border-radius: 6px; padding: 10px; text-align: center; cursor: pointer; transition: all 0.15s; }
 .box input { width: 100%; background: transparent; border: none; color: var(--text); text-align: center; font-size: 12px; font-family: var(--font-mono); font-weight: 600; }
 .box input:focus { outline: none; }
 .box.done { background: var(--done); border-color: var(--done-border); color: var(--accent); }
 
-.check-btn { display: flex; align-items: center; justify-content: center; font-size: 28px; cursor: pointer; padding: 0; }
-.check-btn.active { color: var(--accent); }
+.check-btn { display: flex; align-items: center; justify-content: center; font-size: 28px; cursor: pointer; padding: 0; color: var(--muted); }
+.check-btn.active { color: var(--accent-dim); }
 
 .bottom-nav { position: fixed; bottom: 0; left: 0; right: 0; background: var(--bg); border-top: 1px solid var(--border); padding: 8px 12px; display: flex; gap: 6px; z-index: 50; }
 .nav-btn { flex: 1; padding: 10px; background: var(--bg2); border: 1px solid var(--border); border-radius: 8px; color: var(--muted); font-size: 10px; font-family: var(--font-mono); cursor: pointer; text-align: center; transition: all 0.15s; }
@@ -288,7 +288,7 @@ function renderEx(dayKey, exercise) {
   const allSeriesDone = seriesArray.every(s => s.done);
   
   let html = `
-    <div class="exercise collapsed ${allSeriesDone ? 'completed' : ''}" data-ex-id="${exId}" onclick="event.stopPropagation()">
+    <div class="exercise ${allSeriesDone ? 'collapsed completed' : ''}" data-ex-id="${exId}" onclick="event.stopPropagation()">
       <div class="ex-header" onclick="togEx('${exId}'); event.stopPropagation();">
         <div class="ex-name">${exercise.nombre}</div>
         <div class="ex-arrow">▼</div>
@@ -309,7 +309,10 @@ function renderEx(dayKey, exercise) {
           <div class="box" onclick="event.stopPropagation()">
             <input type="number" value="${ser.w}" placeholder="0" onchange="(function() { ST.ser['${did}']['${exId}'][${idx}].w = +this.value; save(); renderMain(); }).call(this);" min="0">
           </div>
-          <div class="box check-btn ${isDone ? 'active' : ''}" onclick="(function() { ST.ser['${did}']['${exId}'][${idx}].done = !ST.ser['${did}']['${exId}'][${idx}].done; save(); renderMain(); }).call(this); event.stopPropagation();">
+          <div class="box" onclick="event.stopPropagation()">
+            <input type="number" value="${ser.r}" placeholder="12" onchange="(function() { ST.ser['${did}']['${exId}'][${idx}].r = +this.value; save(); renderMain(); }).call(this);" min="1">
+          </div>
+          <div class="check-btn ${isDone ? 'active' : ''}" onclick="(function() { ST.ser['${did}']['${exId}'][${idx}].done = !ST.ser['${did}']['${exId}'][${idx}].done; save(); renderMain(); }).call(this); event.stopPropagation();">
             ${isDone ? '●' : '○'}
           </div>
         </div>
