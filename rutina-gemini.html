@@ -288,7 +288,7 @@ function renderEx(dayKey, exercise) {
   const allSeriesDone = seriesArray.every(s => s.done);
   
   let html = `
-    <div class="exercise ${allSeriesDone ? 'collapsed completed' : ''}" data-ex-id="${exId}" onclick="event.stopPropagation()">
+    <div class="exercise collapsed ${allSeriesDone ? 'completed' : ''}" data-ex-id="${exId}" onclick="event.stopPropagation()">
       <div class="ex-header" onclick="togEx('${exId}'); event.stopPropagation();">
         <div class="ex-name">${exercise.nombre}</div>
         <div class="ex-arrow">▼</div>
