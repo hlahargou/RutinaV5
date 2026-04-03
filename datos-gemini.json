@@ -8,9 +8,9 @@
       "sub": "Hipertrofia · Tempo controlado",
       "ejercicios": [
         { "id": "e1", "nombre": "Press inclinado", "peso_default": 37, "historico": [37, 37, 37, 37] },
-        { "id": "e2", "nombre": "Aperturas con mancuernas", "peso_default": 10, "historico": [10, 10, 10] },
-        { "id": "e3", "nombre": "Flexiones diamante", "peso_default": null, "historico": [] },
-        { "id": "e4", "nombre": "Press militar", "peso_default": 20, "historico": [20, 20, 20] },
+        { "id": "e3", "nombre": "Aperturas con mancuernas", "peso_default": 10, "historico": [10, 10, 10] },
+        { "id": "e4", "nombre": "Flexiones diamante", "peso_default": null, "historico": [] },
+        { "id": "e2", "nombre": "Press militar", "peso_default": 20, "historico": [20, 20, 20] },
         { "id": "e5", "nombre": "Elevaciones laterales", "peso_default": 7.5, "historico": [7.5, 7.5, 7.5, 7.5] }
       ]
     },
