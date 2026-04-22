@@ -1,67 +1,102 @@
 {
-  "rutina": "RutinaJGemini",
-  "descripcion": "Rutina mejorada con circuitos metabólicos y énfasis en glúteos",
+  "rutina": "RutinaCompleta5Dias",
+  "descripcion": "Rutina Push/Pull/Legs + Full Body con abdominales y gemelos integrados",
   "ejercicios": {
     "d1": {
       "label": "Día 1",
-      "tag": "Pecho + Hombros",
-      "sub": "Hipertrofia · Tempo controlado",
+      "tag": "Empuje",
+      "sub": "Pecho · Hombros · Tríceps · Tempo 3-1",
       "ejercicios": [
-        { "id": "e1", "nombre": "Press inclinado", "peso_default": 37, "historico": [37, 37, 37, 37] },
-        { "id": "e2", "nombre": "Press militar", "peso_default": 20, "historico": [20, 20, 20] },
-        { "id": "e3", "nombre": "Aperturas con mancuernas", "peso_default": 10, "historico": [10, 10, 10] },
-        { "id": "e5", "nombre": "Elevaciones laterales", "peso_default": 7.5, "historico": [7.5, 7.5, 7.5, 7.5] },
-                { "id": "e4", "nombre": "Flexiones diamante", "peso_default": null, "historico": [] }
-      ]
+        { "id": "e1", "nombre": "Flexiones de Brazo", "series": 3, "repeticiones": "∞", "nota": "Calentamiento + 3x Fallo · Negativa 3s / Concéntrica 1s", "peso_default": null, "historico": [] },
+        { "id": "e2", "nombre": "Press Inclinado Barra", "series": 3, "repeticiones": "∞", "nota": "Calentamiento + 3x Fallo · Negativa 3s / Concéntrica 1s", "peso_default": null, "historico": [] },
+        { "id": "e3", "nombre": "Apertura Plana", "series": 3, "repeticiones": 10, "nota": "Concentrado · Isométrico 1s en extensión y 1s en contracción", "peso_default": null, "historico": [] },
+        { "id": "e4", "nombre": "Vuelos Laterales", "series": 3, "repeticiones": 12, "nota": "Último set con DROPSET", "peso_default": null, "historico": [] },
+        { "id": "e5", "nombre": "Vuelos Frontales", "series": 3, "repeticiones": "∞", "nota": "Al fallo", "peso_default": null, "historico": [] },
+        { "id": "e6", "nombre": "Press Francés", "series": 3, "repeticiones": "8-12", "peso_default": null, "historico": [] },
+        { "id": "e7", "nombre": "Copa Trícep Mancuerna Unilateral", "series": 3, "repeticiones": 12, "peso_default": null, "historico": [] }
+      ],
+      "abdominales": true
     },
     "d2": {
       "label": "Día 2",
-      "tag": "Metabólico A",
-      "sub": "Énfasis Cuádriceps · 4-5 rondas · 45s descanso",
+      "tag": "Tracción",
+      "sub": "Espalda · Bíceps · Deltoides Posterior",
       "ejercicios": [
-        { "id": "e1", "nombre": "Sentadilla Goblet", "peso_default": 20, "historico": [20, 20, 20, 20] },
-        { "id": "e2", "nombre": "Press de pecho", "peso_default": 37, "historico": [37, 37, 37, 37] },
-        { "id": "e3", "nombre": "Estocadas alternas", "peso_default": 10, "historico": [10, 10, 10, 10] },
-        { "id": "e4", "nombre": "Remo unilateral", "peso_default": 10, "historico": [10, 10, 10, 10] },
-        { "id": "e5", "nombre": "Elevaciones laterales", "peso_default": 7.5, "historico": [7.5, 7.5, 7.5, 7.5] }
-      ]
+        { "id": "e1", "nombre": "Remo Barra Abierto", "series": 3, "repeticiones": "8-12", "nota": "Calentamiento + 3x8-12 · Negativa 3s / Concéntrica 1s", "peso_default": null, "historico": [] },
+        { "id": "e2", "nombre": "Remo Serrucho con Mancuerna", "series": 3, "repeticiones": "10-15", "peso_default": null, "historico": [] },
+        { "id": "e3", "nombre": "Pull Over Acostado", "series": 3, "repeticiones": 15, "peso_default": null, "historico": [] },
+        { "id": "e4", "nombre": "Espinales", "series": 3, "repeticiones": 15, "peso_default": null, "historico": [] },
+        { "id": "e5", "nombre": "Curl Bícep Barra Parado", "series": 3, "repeticiones": "10-15", "nota": "Concentrado · Isométrico 1s en extensión y 1s en contracción", "peso_default": null, "historico": [] },
+        { "id": "e6", "nombre": "Curl Bícep Martillo Sentado", "series": 3, "repeticiones": "15-20", "nota": "Concentrado · Isométrico 1s en extensión y 1s en contracción", "peso_default": null, "historico": [] },
+        { "id": "e7", "nombre": "Vuelos Posteriores Inclinado", "series": 3, "repeticiones": "15-20", "peso_default": null, "historico": [] }
+      ],
+      "gemelos": true
     },
     "d3": {
       "label": "Día 3",
-      "tag": "Espalda + Bíceps + Isquios",
-      "sub": "Tracción y flexión",
+      "tag": "Piernas",
+      "sub": "Cuádriceps · Isquios · Glúteos",
       "ejercicios": [
-        { "id": "e1", "nombre": "Remo Barra con pecho apoyado", "peso_default": 20, "historico": [20, 20, 20, 20] },
-        { "id": "e2", "nombre": "Peso Muerto Rumano (RDL)", "peso_default": 37, "historico": [37, 37, 37, 37] },
-        { "id": "e3", "nombre": "Pullover con mancuerna", "peso_default": 12.5, "historico": [12.5, 12.5, 12.5] },
-        { "id": "e4", "nombre": "Curl de bíceps", "peso_default": 10, "historico": [10, 10, 10] },
-        { "id": "e5", "nombre": "Curl de isquios con mancuerna", "peso_default": 10, "historico": [10, 10, 10] }
-      ]
+        { "id": "e1", "nombre": "Salto al Cajón + Sentadilla", "series": 3, "repeticiones": "8-12", "nota": "Saltar al cajón y hacer una sentadilla arriba = 1 rep", "peso_default": null, "historico": [] },
+        { "id": "e2", "nombre": "Curl Nórdico", "series": 3, "repeticiones": "∞", "nota": "Al fallo · Pedir ayuda para sostener tobillos", "peso_default": null, "historico": [] },
+        { "id": "e3", "nombre": "Estocada con Mancuernas", "series": 3, "repeticiones": "8-12", "peso_default": null, "historico": [] },
+        { "id": "e4", "nombre": "Sentadilla Sumo", "series": 3, "repeticiones": "8-15", "peso_default": null, "historico": [] },
+        { "id": "e5", "nombre": "Elevación de Cadera (Talones en Cajón)", "series": 3, "repeticiones": "∞", "nota": "Al fallo", "peso_default": null, "historico": [] }
+      ],
+      "abdominales": true
     },
     "d4": {
       "label": "Día 4",
-      "tag": "Piernas Heavy",
-      "sub": "Fuerza + Hipertrofia · Énfasis glúteo",
+      "tag": "Full Body Superior",
+      "sub": "Empuje + Tracción + Hombros + Brazos",
       "ejercicios": [
-        { "id": "e1", "nombre": "Sentadilla Búlgara", "peso_default": 7.5, "historico": [7.5, 7.5, 7.5, 7.5] },
-        { "id": "e2", "nombre": "Hip Thrust", "peso_default": 45, "historico": [45, 45, 45, 45] },
-        { "id": "e3", "nombre": "Sissy Squat o extensiones con banda", "peso_default": null, "historico": [] },
-        { "id": "e4", "nombre": "Elevación de talones", "peso_default": null, "historico": [] },
-        { "id": "e5", "nombre": "Plancha abdominal + Deadbug", "peso_default": null, "historico": [] }
-      ]
+        { "id": "e1", "nombre": "Flexiones + Remo Unilateral", "series": 3, "repeticiones": "∞", "nota": "Calentamiento + 3x Fallo · 1 flexión + 1 remo c/brazo = 1 rep", "peso_default": null, "historico": [] },
+        { "id": "e2", "nombre": "Espinales", "series": 3, "repeticiones": 15, "peso_default": null, "historico": [] },
+        { "id": "e3", "nombre": "Press Inclinado", "series": 3, "repeticiones": 12, "peso_default": null, "historico": [] },
+        { "id": "e4", "nombre": "Press Militar Barra", "series": 3, "repeticiones": "8-12", "nota": "Pesado", "peso_default": null, "historico": [] },
+        { "id": "e5", "nombre": "Vuelos Laterales", "series": 3, "repeticiones": "12-15", "peso_default": null, "historico": [] },
+        { "id": "e6", "nombre": "Vuelos Frontales", "series": 3, "repeticiones": "∞", "nota": "Al fallo", "peso_default": null, "historico": [] },
+        { "id": "e7", "nombre": "Bícep Martillo", "series": 3, "repeticiones": 15, "peso_default": null, "historico": [] },
+        { "id": "e8", "nombre": "Press Francés", "series": 3, "repeticiones": 12, "peso_default": null, "historico": [] }
+      ],
+      "gemelos": true
     },
     "d5": {
       "label": "Día 5",
-      "tag": "Metabólico B",
-      "sub": "Full Body + Pecho · 4-5 rondas · 45s descanso",
+      "tag": "Tren Inferior",
+      "sub": "Glúteos · Isquios · Cuádriceps · Potencia",
       "ejercicios": [
-        { "id": "e1", "nombre": "Sentadilla Goblet profunda", "peso_default": 20, "historico": [20, 20, 20, 20] },
-        { "id": "e2", "nombre": "Press de pecho", "peso_default": 37, "historico": [37, 37, 37, 37] },
-        { "id": "e3", "nombre": "Estocadas alternas", "peso_default": 10, "historico": [10, 10, 10, 10] },
-        { "id": "e4", "nombre": "Remo unilateral", "peso_default": 10, "historico": [10, 10, 10, 10] },
-        { "id": "e5", "nombre": "Elevaciones laterales", "peso_default": 7.5, "historico": [7.5, 7.5, 7.5, 7.5] }
-      ]
+        { "id": "e1", "nombre": "Sentadilla con Salto (c/Mancuerna)", "series": 3, "repeticiones": "8-12", "nota": "Saltar con mancuerna en cada mano", "peso_default": null, "historico": [] },
+        { "id": "e2", "nombre": "Estocada Búlgara con Barra", "series": 3, "repeticiones": "8-12", "nota": "Concentrado", "peso_default": null, "historico": [] },
+        { "id": "e3", "nombre": "Curl Nórdico", "series": 3, "repeticiones": "∞", "nota": "Al fallo · Pedir ayuda para sostener tobillos", "peso_default": null, "historico": [] },
+        { "id": "e4", "nombre": "Sentadilla Sumo", "series": 3, "repeticiones": "8-12", "peso_default": null, "historico": [] },
+        { "id": "e5", "nombre": "Elevación de Cadera con Barra + Abducción", "series": 3, "repeticiones": "8-12", "nota": "Concentrado · Banda en rodillas para abducción", "peso_default": null, "historico": [] }
+      ],
+      "abdominales": true
     }
   },
-  "ultima_actualizacion": "2025-03-20"
+  "abdominales": {
+    "frecuencia": "3 veces por semana",
+    "dias": ["d1", "d3", "d5"],
+    "ejercicios": [
+      { "id": "a1", "nombre": "Plancha Abdominal", "series": 3, "repeticiones": "30s" },
+      { "id": "a2", "nombre": "Plancha Lateral", "series": 3, "repeticiones": "30s" },
+      { "id": "a3", "nombre": "Crunches Boca Arriba", "series": 3, "repeticiones": "∞", "nota": "Al fallo" }
+    ]
+  },
+  "gemelos": {
+    "frecuencia": "2 veces por semana",
+    "dias": ["d2", "d4"],
+    "ejercicios": [
+      { "id": "g1", "nombre": "Gemelo Unilateral con Mancuerna", "series": 1, "repeticiones": 50, "nota": "50 reps con cada pierna" }
+    ]
+  },
+  "semanas": {
+    "s1": { "label": "Semana 1", "pesos": {} },
+    "s2": { "label": "Semana 2", "pesos": {} },
+    "s3": { "label": "Semana 3", "pesos": {} },
+    "s4": { "label": "Semana 4", "pesos": {} }
+  },
+  "ultima_actualizacion": "2026-04-21"
 }
+
