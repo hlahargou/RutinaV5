@@ -23,6 +23,12 @@
   --done: #152009;
   --done-border: #4a7a14;
   --red: #f06060;
+  --orange: #f0a060;
+  --orange-bg: #2a1808;
+  --orange-border: #7a4a14;
+  --blue: #60c8f0;
+  --blue-bg: #08182a;
+  --blue-border: #147a8a;
   --radius: 10px;
   --font-head: 'Syne', sans-serif;
   --font-mono: 'DM Mono', monospace;
@@ -48,12 +54,29 @@ body { background: var(--bg); color: var(--text); font-family: var(--font-mono);
 .day-sub { color: var(--muted); font-size: 10px; }
 .day-info.completed .day-sub { color: var(--accent-dim); }
 
+/* Sección especial abdominales */
+.section-header { display: flex; align-items: center; gap: 6px; margin: 12px 0 6px; font-size: 10px; font-family: var(--font-head); font-weight: 600; letter-spacing: 0.5px; text-transform: uppercase; }
+.section-header.abs { color: var(--orange); }
+.section-header.calves { color: var(--blue); }
+.section-header::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+
 .exercise { background: var(--bg2); border: 1px solid var(--border); border-radius: 8px; margin-bottom: 8px; overflow: hidden; }
 .exercise.completed { background: var(--done); border-color: var(--done-border); }
+.exercise.abs-ex { border-color: var(--orange-border); background: var(--orange-bg); }
+.exercise.abs-ex.completed { background: var(--done); border-color: var(--done-border); }
+.exercise.calves-ex { border-color: var(--blue-border); background: var(--blue-bg); }
+.exercise.calves-ex.completed { background: var(--done); border-color: var(--done-border); }
+
 .ex-header { padding: 10px; cursor: pointer; display: flex; align-items: center; justify-content: space-between; }
 .ex-name { font-size: 12px; font-weight: 600; color: var(--text); }
 .exercise.completed .ex-name { color: var(--accent); }
+.exercise.abs-ex .ex-name { color: var(--orange); }
+.exercise.abs-ex.completed .ex-name { color: var(--accent); }
+.exercise.calves-ex .ex-name { color: var(--blue); }
+.exercise.calves-ex.completed .ex-name { color: var(--accent); }
 .ex-arrow { color: var(--accent); transition: transform 0.2s; font-size: 14px; }
+.exercise.abs-ex .ex-arrow { color: var(--orange); }
+.exercise.calves-ex .ex-arrow { color: var(--blue); }
 .exercise.collapsed .ex-arrow { transform: rotate(-90deg); }
 
 .ex-meta { padding: 0 10px; display: flex; gap: 8px; font-size: 9px; color: var(--muted); margin-bottom: 8px; }
@@ -136,16 +159,43 @@ function checkForChanges() {
   }
 }
 
+// Verifica si TODOS los ejercicios del día (incluyendo abs y gemelos si aplican) están completos
 function checkDayCompletion() {
-  const dayKey = ST.day;
+  return checkDayCompletionForKey(ST.day);
+}
+
+function checkDayCompletionForKey(dayKey) {
   if (!ST.ser[dayKey]) return false;
-  
   const dayData = DAYS_DATA.ejercicios[dayKey];
-  return dayData.ejercicios.every(ex => {
+
+  // Ejercicios principales
+  const mainDone = dayData.ejercicios.every(ex => {
     if (!ST.ser[dayKey][ex.id]) return false;
-    const series = ST.ser[dayKey][ex.id];
-    return Object.values(series).every(s => s.done);
+    return Object.values(ST.ser[dayKey][ex.id]).every(s => s.done);
   });
+  if (!mainDone) return false;
+
+  // Abdominales (si aplica)
+  if (dayData.abdominales && DAYS_DATA.abdominales) {
+    const absDone = DAYS_DATA.abdominales.ejercicios.every(ex => {
+      const storeId = 'abs_' + ex.id;
+      if (!ST.ser[dayKey][storeId]) return false;
+      return Object.values(ST.ser[dayKey][storeId]).every(s => s.done);
+    });
+    if (!absDone) return false;
+  }
+
+  // Gemelos (si aplica)
+  if (dayData.gemelos && DAYS_DATA.gemelos) {
+    const calvesDone = DAYS_DATA.gemelos.ejercicios.every(ex => {
+      const storeId = 'gem_' + ex.id;
+      if (!ST.ser[dayKey][storeId]) return false;
+      return Object.values(ST.ser[dayKey][storeId]).every(s => s.done);
+    });
+    if (!calvesDone) return false;
+  }
+
+  return true;
 }
 
 function updateBottomNav() {
@@ -204,7 +254,6 @@ function updateJSON() {
   
   DAYS_DATA.ultima_actualizacion = hoy;
   
-  // Actualizar Gist con autenticación
   const gistId = '3d42a7018719d4e9360f89434e1f0d07';
   const gistUrl = `https://api.github.com/gists/${gistId}`;
   const token = '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';
@@ -280,60 +329,75 @@ function togEx(exId) {
   }
 }
 
+// FIX 1: selectDay actualiza pills y renderiza SIN recargar página
+function selectDay(key) {
+  ST.day = key;
+  expandedEx = null; // resetear expansión al cambiar de día
+  save();
+
+  // Actualizar clases de pills en el DOM directamente (sin re-renderizar todo)
+  document.querySelectorAll('.pill').forEach(p => {
+    const pKey = p.dataset.dayKey;
+    p.classList.toggle('active', pKey === key);
+  });
+
+  renderMain();
+}
+
 function renderPills() {
   const pills = document.getElementById('pills');
   const daysKeys = Object.keys(DAYS_DATA.ejercicios);
   pills.innerHTML = daysKeys.map(key => {
     const dayData = DAYS_DATA.ejercicios[key];
     const isCompleted = checkDayCompletionForKey(key);
-    return `<button class="pill ${key === ST.day ? 'active' : ''} ${isCompleted ? 'completed' : ''}" onclick="ST.day='${key}'; save(); renderMain();">${dayData.label}</button>`;
+    const isActive = key === ST.day;
+    return `<button 
+      class="pill ${isActive ? 'active' : ''} ${isCompleted ? 'completed' : ''}" 
+      data-day-key="${key}"
+      onclick="selectDay('${key}')"
+    >${dayData.label}</button>`;
   }).join('');
 }
 
-function checkDayCompletionForKey(dayKey) {
-  if (!ST.ser[dayKey]) return false;
-  const dayData = DAYS_DATA.ejercicios[dayKey];
-  return dayData.ejercicios.every(ex => {
-    if (!ST.ser[dayKey][ex.id]) return false;
-    const series = ST.ser[dayKey][ex.id];
-    return Object.values(series).every(s => s.done);
-  });
-}
-
-function renderEx(dayKey, exercise) {
+// Renderiza un bloque de ejercicio (reutilizable para main, abs y gemelos)
+function renderEx(dayKey, exercise, storeIdPrefix, extraClass) {
   const did = dayKey;
-  const exId = exercise.id;
-  const sets = 4;
-  const seriesArray = Array.from({length: sets}, (_, i) => getSer(did, exId, i, exercise.peso_default));
+  const storeId = storeIdPrefix ? storeIdPrefix + exercise.id : exercise.id;
+  const sets = exercise.series || 3;
+  const seriesArray = Array.from({length: sets}, (_, i) => getSer(did, storeId, i, exercise.peso_default || null));
   const allSeriesDone = seriesArray.every(s => s.done);
-  const isExpanded = expandedEx === exId;
+  const isExpanded = expandedEx === storeId;
+  const cssClass = extraClass || '';
   
   let html = `
-    <div class="exercise ${isExpanded ? '' : 'collapsed'} ${allSeriesDone ? 'completed' : ''}" data-ex-id="${exId}" onclick="event.stopPropagation()">
-      <div class="ex-header" onclick="togEx('${exId}'); event.stopPropagation();">
+    <div class="exercise ${cssClass} ${isExpanded ? '' : 'collapsed'} ${allSeriesDone ? 'completed' : ''}" data-ex-id="${storeId}" onclick="event.stopPropagation()">
+      <div class="ex-header" onclick="togEx('${storeId}'); event.stopPropagation();">
         <div class="ex-name">${exercise.nombre}</div>
         <div class="ex-arrow">▼</div>
       </div>
       <div class="ex-meta">
         ${exercise.peso_default ? `<span>${exercise.peso_default}kg</span>` : '<span>sin peso</span>'}
         ${exercise.historico && exercise.historico.length > 0 ? `<span>Hist: ${exercise.historico[exercise.historico.length-1]}kg</span>` : ''}
+        ${exercise.nota ? `<span style="max-width:200px;white-space:normal;line-height:1.3;">${exercise.nota}</span>` : ''}
       </div>
       <div class="series-wrap">
   `;
   
   seriesArray.forEach((ser, idx) => {
     const isDone = ser.done;
+    // Mostrar repeticiones del JSON o el valor guardado
+    const repsDisplay = exercise.repeticiones !== undefined ? exercise.repeticiones : ser.r;
     html += `
       <div class="series ${isDone ? 'completed' : ''}">
-        <div class="series-label">Serie ${idx + 1}</div>
+        <div class="series-label">Serie ${idx + 1}${exercise.repeticiones !== undefined ? ' · ' + repsDisplay + ' reps' : ''}</div>
         <div class="serie-boxes">
           <div class="box" onclick="event.stopPropagation()">
-            <input type="number" value="${ser.w}" placeholder="0" onchange="(function() { ST.ser['${did}']['${exId}'][${idx}].w = +this.value; save(); renderMain(); }).call(this);" min="0">
+            <input type="number" value="${ser.w}" placeholder="0" onchange="(function() { ST.ser['${did}']['${storeId}'][${idx}].w = +this.value; save(); }).call(this);" min="0">
           </div>
           <div class="box" onclick="event.stopPropagation()">
-            <input type="number" value="${ser.r}" placeholder="12" onchange="(function() { ST.ser['${did}']['${exId}'][${idx}].r = +this.value; save(); renderMain(); }).call(this);" min="1">
+            <input type="number" value="${ser.r}" placeholder="12" onchange="(function() { ST.ser['${did}']['${storeId}'][${idx}].r = +this.value; save(); }).call(this);" min="1">
           </div>
-          <div class="check-btn ${isDone ? 'active' : ''}" onclick="(function() { ST.ser['${did}']['${exId}'][${idx}].done = !ST.ser['${did}']['${exId}'][${idx}].done; save(); renderMain(); }).call(this); event.stopPropagation();">
+          <div class="check-btn ${isDone ? 'active' : ''}" onclick="(function() { ST.ser['${did}']['${storeId}'][${idx}].done = !ST.ser['${did}']['${storeId}'][${idx}].done; save(); renderMain(); }).call(this); event.stopPropagation();">
             ${isDone ? '●' : '○'}
           </div>
         </div>
@@ -342,7 +406,6 @@ function renderEx(dayKey, exercise) {
   });
   
   html += `</div></div>`;
-  
   return html;
 }
 
@@ -350,8 +413,6 @@ function renderMain() {
   const dayKey = ST.day;
   const dayData = DAYS_DATA.ejercicios[dayKey];
   const dayCompleted = checkDayCompletion();
-  
-  // Guardar el ejercicio expandido actual ANTES de re-renderizar
   const currentExpanded = expandedEx;
   
   let html = `
@@ -361,20 +422,43 @@ function renderMain() {
     </div>
   `;
   
+  // Ejercicios principales
   dayData.ejercicios.forEach(exercise => {
-    html += renderEx(dayKey, exercise);
+    html += renderEx(dayKey, exercise, '', '');
   });
+
+  // FIX 2: Abdominales (si este día los tiene)
+  if (dayData.abdominales && DAYS_DATA.abdominales) {
+    html += `<div class="section-header abs">🔥 Abdominales · ${DAYS_DATA.abdominales.frecuencia}</div>`;
+    DAYS_DATA.abdominales.ejercicios.forEach(exercise => {
+      html += renderEx(dayKey, exercise, 'abs_', 'abs-ex');
+    });
+  }
+
+  // FIX 2: Gemelos (si este día los tiene)
+  if (dayData.gemelos && DAYS_DATA.gemelos) {
+    html += `<div class="section-header calves">💧 Gemelos · ${DAYS_DATA.gemelos.frecuencia}</div>`;
+    DAYS_DATA.gemelos.ejercicios.forEach(exercise => {
+      html += renderEx(dayKey, exercise, 'gem_', 'calves-ex');
+    });
+  }
   
   document.getElementById('day-container').innerHTML = html;
   
-  // Restaurar el estado de expansión
+  // Restaurar expansión
   if (currentExpanded) {
     expandedEx = currentExpanded;
     const exElement = document.querySelector(`[data-ex-id="${currentExpanded}"]`);
-    if (exElement) {
-      exElement.classList.remove('collapsed');
-    }
+    if (exElement) exElement.classList.remove('collapsed');
   }
+
+  // Actualizar pills para reflejar completados correctamente
+  document.querySelectorAll('.pill').forEach(p => {
+    const pKey = p.dataset.dayKey;
+    const isCompleted = checkDayCompletionForKey(pKey);
+    p.classList.toggle('active', pKey === ST.day);
+    p.classList.toggle('completed', isCompleted);
+  });
   
   updateBottomNav();
 }
