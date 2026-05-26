@@ -1,95 +1,215 @@
 {
-  "rutina": "RutinaCompleta5Dias",
-  "descripcion": "Rutina Push/Pull/Legs + Full Body con abdominales y gemelos integrados",
+  "rutina": "RutinaCoach4Dias",
+  "descripcion": "Rutina de 4 días · Torso · Piernas · Tracción · Mixto + Core · Foco en salud lumbar y control de tempo · Días 5, 6 y 7 descanso",
   "ejercicios": {
     "d1": {
       "label": "Día 1",
-      "tag": "Empuje",
-      "sub": "Pecho · Hombros · Tríceps · Tempo 3-1",
+      "tag": "Torso · Empujes, Brazos y Estabilidad",
+      "sub": "Pecho · Hombro anterior/lateral · Tríceps · Lumbar a salvo",
       "ejercicios": [
-        { "id": "e1", "nombre": "Flexiones de Brazo", "series": 3, "repeticiones": "∞", "nota": "Calentamiento + 3x Fallo · Negativa 3s / Concéntrica 1s", "peso_default": null, "historico": [] },
-        { "id": "e2", "nombre": "Press Inclinado Barra", "series": 3, "repeticiones": "∞", "nota": "Calentamiento + 3x Fallo · Negativa 3s / Concéntrica 1s", "peso_default": null, "historico": [] },
-        { "id": "e3", "nombre": "Apertura Plana", "series": 3, "repeticiones": 10, "nota": "Concentrado · Isométrico 1s en extensión y 1s en contracción", "peso_default": null, "historico": [] },
-        { "id": "e4", "nombre": "Vuelos Laterales", "series": 3, "repeticiones": 12, "nota": "Último set con DROPSET", "peso_default": null, "historico": [] },
-        { "id": "e5", "nombre": "Vuelos Frontales", "series": 3, "repeticiones": "∞", "nota": "Al fallo", "peso_default": null, "historico": [] },
-        { "id": "e6", "nombre": "Press Francés", "series": 3, "repeticiones": "8-12", "peso_default": null, "historico": [] },
-        { "id": "e7", "nombre": "Copa Trícep Mancuerna Unilateral", "series": 3, "repeticiones": 12, "peso_default": null, "historico": [] }
-      ],
-      "abdominales": true
+        {
+          "id": "e1",
+          "nombre": "Press de Banca Inclinado con Mancuernas",
+          "series": 3,
+          "repeticiones": "8-12",
+          "nota": "Banco a 30° · Tempo 3-0-1-0 · Mancuernas 12.5kg o 15kg",
+          "peso_default": 12.5,
+          "historico": []
+        },
+        {
+          "id": "e2",
+          "nombre": "Press Militar Sentado con Barra",
+          "series": 3,
+          "repeticiones": "8-12",
+          "nota": "Soporte lumbar en el banco a 90° · Tempo 3-0-1-0 · Barra 20kg o 30kg",
+          "peso_default": 20,
+          "historico": []
+        },
+        {
+          "id": "e3",
+          "nombre": "Flexiones de Brazos",
+          "series": 3,
+          "repeticiones": "∞",
+          "nota": "Al fallo técnico (RIR 1) · Torso apoyado en el suelo o colchón · Tempo 3-0-1-0 · Control excéntrico brutal",
+          "peso_default": null,
+          "historico": []
+        },
+        {
+          "id": "e4",
+          "nombre": "Vuelos Laterales con Mancuernas",
+          "series": 4,
+          "repeticiones": "12-15",
+          "nota": "De pie o sentado · Tempo 2-0-1-1 · 1s de pausa arriba aguantando el peso · Mancuernas 5kg o 6kg",
+          "peso_default": 5,
+          "historico": []
+        },
+        {
+          "id": "e5",
+          "nombre": "Copa de Tríceps a Dos Manos con Mancuerna",
+          "series": 3,
+          "repeticiones": "10-12",
+          "nota": "Tempo 3-0-1-0 · Mancuerna 12.5kg o 15kg",
+          "peso_default": 12.5,
+          "historico": []
+        }
+      ]
     },
     "d2": {
       "label": "Día 2",
-      "tag": "Tracción",
-      "sub": "Espalda · Bíceps · Deltoides Posterior",
+      "tag": "Piernas · Cuádriceps y Cadena Posterior",
+      "sub": "Exigencia real sin comprimir discos intervertebrales",
       "ejercicios": [
-        { "id": "e1", "nombre": "Remo Barra Abierto", "series": 3, "repeticiones": "8-12", "nota": "Calentamiento + 3x8-12 · Negativa 3s / Concéntrica 1s", "peso_default": null, "historico": [] },
-        { "id": "e2", "nombre": "Remo Serrucho con Mancuerna", "series": 3, "repeticiones": "10-15", "peso_default": null, "historico": [] },
-        { "id": "e3", "nombre": "Pull Over Acostado", "series": 3, "repeticiones": 15, "peso_default": null, "historico": [] },
-        { "id": "e4", "nombre": "Espinales", "series": 3, "repeticiones": 15, "peso_default": null, "historico": [] },
-        { "id": "e5", "nombre": "Curl Bícep Barra Parado", "series": 3, "repeticiones": "10-15", "nota": "Concentrado · Isométrico 1s en extensión y 1s en contracción", "peso_default": null, "historico": [] },
-        { "id": "e6", "nombre": "Curl Bícep Martillo Sentado", "series": 3, "repeticiones": "15-20", "nota": "Concentrado · Isométrico 1s en extensión y 1s en contracción", "peso_default": null, "historico": [] },
-        { "id": "e7", "nombre": "Vuelos Posteriores Inclinado", "series": 3, "repeticiones": "15-20", "peso_default": null, "historico": [] }
-      ],
-      "gemelos": true
+        {
+          "id": "e1",
+          "nombre": "Sentadilla Búlgara",
+          "series": 3,
+          "repeticiones": "8-10/p",
+          "nota": "Pie trasero en el cajón de salto · Mancuernas a los lados · Tempo 3-0-1-0 · 7.5kg o 10kg · Unilateral: duplicás carga en la pierna con la mitad de peso en la espalda",
+          "peso_default": 7.5,
+          "historico": []
+        },
+        {
+          "id": "e2",
+          "nombre": "Sentadilla Goblet con Bolsa de Peso",
+          "series": 3,
+          "repeticiones": "10-12",
+          "nota": "Abrazando la bolsa de 25kg contra el pecho · Tempo 3-1-1-0 · 1s de pausa abajo en el punto profundo",
+          "peso_default": 25,
+          "historico": []
+        },
+        {
+          "id": "e3",
+          "nombre": "Puente de Glúteos/Isquios Unilateral",
+          "series": 3,
+          "repeticiones": "12-15/p",
+          "nota": "Espalda en colchoneta · Talón activo en el cajón · Tempo 2-0-1-2 · 2s de contracción arriba bloqueando glúteo e isquio",
+          "peso_default": null,
+          "historico": []
+        },
+        {
+          "id": "e4",
+          "nombre": "Subidas al Cajón de Salto (Step-ups)",
+          "series": 3,
+          "repeticiones": "10/p",
+          "nota": "Alternado · Bajada controlada en 3s tocando el piso con la punta del pie sin dejarse caer · Mancuernas 7.5kg",
+          "peso_default": 7.5,
+          "historico": []
+        }
+      ]
     },
     "d3": {
       "label": "Día 3",
-      "tag": "Piernas",
-      "sub": "Cuádriceps · Isquios · Glúteos",
+      "tag": "Tracción · Espalda Completa y Hombro Posterior",
+      "sub": "Postura · Densidad en la espalda · Blindaje anti-lesión",
       "ejercicios": [
-        { "id": "e1", "nombre": "Salto al Cajón + Sentadilla", "series": 3, "repeticiones": "8-12", "nota": "Saltar al cajón y hacer una sentadilla arriba = 1 rep", "peso_default": null, "historico": [] },
-        { "id": "e2", "nombre": "Curl Nórdico", "series": 3, "repeticiones": "∞", "nota": "Al fallo · Pedir ayuda para sostener tobillos", "peso_default": null, "historico": [] },
-        { "id": "e3", "nombre": "Estocada con Mancuernas", "series": 3, "repeticiones": "8-12", "peso_default": null, "historico": [] },
-        { "id": "e4", "nombre": "Sentadilla Sumo", "series": 3, "repeticiones": "8-15", "peso_default": null, "historico": [] },
-        { "id": "e5", "nombre": "Elevación de Cadera (Talones en Cajón)", "series": 3, "repeticiones": "∞", "nota": "Al fallo", "peso_default": null, "historico": [] }
-      ],
-      "abdominales": true
+        {
+          "id": "e1",
+          "nombre": "Pullover con Mancuerna",
+          "series": 3,
+          "repeticiones": "10-12",
+          "nota": "Acostado boca arriba en banco plano · Tempo 3-0-1-0 · Mancuerna 12.5kg o 15kg",
+          "peso_default": 12.5,
+          "historico": []
+        },
+        {
+          "id": "e2",
+          "nombre": "Remo con Mancuerna Unilateral",
+          "series": 4,
+          "repeticiones": "8-12",
+          "nota": "Apoyando mano y rodilla en banco plano · Tempo 3-0-1-1 · Apretá el dorsal 1s atrás antes de bajar · Mancuerna 15kg o adaptada",
+          "peso_default": 15,
+          "historico": []
+        },
+        {
+          "id": "e3",
+          "nombre": "Remo con Barra Pecho Apoyado",
+          "series": 3,
+          "repeticiones": "10-12",
+          "nota": "Banco inclinado 30-45° · Tempo 3-0-1-0 · Barra 20kg o 30kg · Banco absorbe tu peso, esfuerzo 100% espalda alta y deltoides posterior · Cero estrés lumbar",
+          "peso_default": 20,
+          "historico": []
+        },
+        {
+          "id": "e4",
+          "nombre": "Vuelos Posteriores / Pájaros",
+          "series": 4,
+          "repeticiones": "12-15",
+          "nota": "Sentado, torso inclinado hacia adelante · Tempo 2-0-1-1 · Mancuernas 4kg o 5kg",
+          "peso_default": 4,
+          "historico": []
+        },
+        {
+          "id": "e5",
+          "nombre": "Curl de Bíceps Alterno con Mancuerna",
+          "series": 3,
+          "repeticiones": "10-12",
+          "nota": "Sentado en banco · Tempo 3-0-1-0 · Mancuernas 7.5kg o 10kg",
+          "peso_default": 7.5,
+          "historico": []
+        }
+      ]
     },
     "d4": {
       "label": "Día 4",
-      "tag": "Full Body Superior",
-      "sub": "Empuje + Tracción + Hombros + Brazos",
+      "tag": "Mixto Alta Intensidad + Core Estático",
+      "sub": "Remate metabólico · Cinturón natural de la espalda",
       "ejercicios": [
-        { "id": "e1", "nombre": "Flexiones + Remo Unilateral", "series": 3, "repeticiones": "∞", "nota": "Calentamiento + 3x Fallo · 1 flexión + 1 remo c/brazo = 1 rep", "peso_default": null, "historico": [] },
-        { "id": "e2", "nombre": "Espinales", "series": 3, "repeticiones": 15, "peso_default": null, "historico": [] },
-        { "id": "e3", "nombre": "Press Inclinado", "series": 3, "repeticiones": 12, "peso_default": null, "historico": [] },
-        { "id": "e4", "nombre": "Press Militar Barra", "series": 3, "repeticiones": "8-12", "nota": "Pesado", "peso_default": null, "historico": [] },
-        { "id": "e5", "nombre": "Vuelos Laterales", "series": 3, "repeticiones": "12-15", "peso_default": null, "historico": [] },
-        { "id": "e6", "nombre": "Vuelos Frontales", "series": 3, "repeticiones": "∞", "nota": "Al fallo", "peso_default": null, "historico": [] },
-        { "id": "e7", "nombre": "Bícep Martillo", "series": 3, "repeticiones": 15, "peso_default": null, "historico": [] },
-        { "id": "e8", "nombre": "Press Francés", "series": 3, "repeticiones": 12, "peso_default": null, "historico": [] }
-      ],
-      "gemelos": true
+        {
+          "id": "e1",
+          "nombre": "Zancadas Caminando con Bolsa de Peso",
+          "series": 3,
+          "repeticiones": 12,
+          "nota": "O estocadas en el lugar · Bolsa 15kg o 25kg en la espalda/trapecio · Tempo controlado y continuo · 12 reps totales",
+          "peso_default": 15,
+          "historico": []
+        },
+        {
+          "id": "e2",
+          "nombre": "Remo Renegado en Plancha",
+          "series": 3,
+          "repeticiones": "8/lado",
+          "nota": "Posición de lagartija sobre mancuernas · Remo alternado · Mancuernas 7.5kg o 10kg · Estímulo anti-rotacional para el core, trabaja espalda y abdomen a la vez",
+          "peso_default": 7.5,
+          "historico": []
+        },
+        {
+          "id": "e3",
+          "nombre": "Bird-Dog / Superman Alternado",
+          "series": 3,
+          "repeticiones": "10/lado",
+          "nota": "En cuadrupedia en colchoneta · 3s de sostén arriba en cada extensión · Clave biomecánica para rehabilitar la lumbar",
+          "peso_default": null,
+          "historico": []
+        },
+        {
+          "id": "e4",
+          "nombre": "Plancha Abdominal Prone",
+          "series": 3,
+          "repeticiones": "45-60s",
+          "nota": "Colchoneta · Contracción activa apretando glúteos y cuádriceps · No dejar caer la pelvis",
+          "peso_default": null,
+          "historico": []
+        }
+      ]
     },
     "d5": {
       "label": "Día 5",
-      "tag": "Tren Inferior",
-      "sub": "Glúteos · Isquios · Cuádriceps · Potencia",
-      "ejercicios": [
-        { "id": "e1", "nombre": "Sentadilla con Salto (c/Mancuerna)", "series": 3, "repeticiones": "8-12", "nota": "Saltar con mancuerna en cada mano", "peso_default": null, "historico": [] },
-        { "id": "e2", "nombre": "Estocada Búlgara con Barra", "series": 3, "repeticiones": "8-12", "nota": "Concentrado", "peso_default": null, "historico": [] },
-        { "id": "e3", "nombre": "Curl Nórdico", "series": 3, "repeticiones": "∞", "nota": "Al fallo · Pedir ayuda para sostener tobillos", "peso_default": null, "historico": [] },
-        { "id": "e4", "nombre": "Sentadilla Sumo", "series": 3, "repeticiones": "8-12", "peso_default": null, "historico": [] },
-        { "id": "e5", "nombre": "Elevación de Cadera con Barra + Abducción", "series": 3, "repeticiones": "8-12", "nota": "Concentrado · Banda en rodillas para abducción", "peso_default": null, "historico": [] }
-      ],
-      "abdominales": true
+      "tag": "Descanso",
+      "sub": "Día de descanso",
+      "ejercicios": []
+    },
+    "d6": {
+      "label": "Día 6",
+      "tag": "Descanso",
+      "sub": "Día de descanso",
+      "ejercicios": []
+    },
+    "d7": {
+      "label": "Día 7",
+      "tag": "Descanso",
+      "sub": "Día de descanso",
+      "ejercicios": []
     }
-  },
-  "abdominales": {
-    "frecuencia": "3 veces por semana",
-    "dias": ["d1", "d3", "d5"],
-    "ejercicios": [
-      { "id": "a1", "nombre": "Plancha Abdominal", "series": 3, "repeticiones": "30s" },
-      { "id": "a2", "nombre": "Plancha Lateral", "series": 3, "repeticiones": "30s" },
-      { "id": "a3", "nombre": "Crunches Boca Arriba", "series": 3, "repeticiones": "∞", "nota": "Al fallo" }
-    ]
-  },
-  "gemelos": {
-    "frecuencia": "2 veces por semana",
-    "dias": ["d2", "d4"],
-    "ejercicios": [
-      { "id": "g1", "nombre": "Gemelo Unilateral con Mancuerna", "series": 1, "repeticiones": 50, "nota": "50 reps con cada pierna" }
-    ]
   },
   "semanas": {
     "s1": { "label": "Semana 1", "pesos": {} },
@@ -97,6 +217,5 @@
     "s3": { "label": "Semana 3", "pesos": {} },
     "s4": { "label": "Semana 4", "pesos": {} }
   },
-  "ultima_actualizacion": "2026-04-21"
+  "ultima_actualizacion": "2026-05-26"
 }
-
