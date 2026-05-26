@@ -101,7 +101,8 @@ body { background: var(--bg); color: var(--text); font-family: var(--font-mono);
 .nav-btn { flex: 1; padding: 10px; background: var(--bg2); border: 1px solid var(--border); border-radius: 8px; color: var(--muted); font-size: 10px; font-family: var(--font-mono); cursor: pointer; text-align: center; transition: all 0.15s; }
 .nav-btn.active { background: var(--accent-bg); border-color: var(--accent-dim); color: var(--accent); }
 .nav-btn.update-btn { background: var(--accent-bg); border-color: var(--accent-dim); color: var(--accent); }
-.nav-btn.reset-btn { background: var(--red); border-color: var(--red); color: var(--text); }
+.nav-btn.reset-btn { background: var(--orange-bg); border-color: var(--orange-border); color: var(--orange); }
+.nav-btn.reset-all-btn { background: var(--red); border-color: var(--red); color: var(--text); }
 
 .exercise.collapsed .ex-meta,
 .exercise.collapsed .series-wrap { display: none; }
@@ -206,15 +207,16 @@ function updateBottomNav() {
     html += `<button class="nav-btn update-btn" onclick="updateJSON()">Actualizar</button>`;
   }
   
-  if (checkDayCompletion()) {
-    html += `<button class="nav-btn reset-btn" onclick="resetDay()">Reiniciar Día</button>`;
-  }
+  html += `<button class="nav-btn reset-btn" onclick="resetDay()">Reiniciar Día</button>`;
+  html += `<button class="nav-btn reset-all-btn" onclick="resetAll()">Reiniciar Todo</button>`;
   
   nav.innerHTML = html;
 }
 
 function resetDay() {
   const dayKey = ST.day;
+  const dayLabel = (DAYS_DATA && DAYS_DATA.ejercicios[dayKey]) ? DAYS_DATA.ejercicios[dayKey].label : dayKey;
+  if (!confirm(`¿Reiniciar el estado de ${dayLabel}? Se desmarcarán todos los ejercicios de este día.`)) return;
   if (ST.ser[dayKey]) {
     Object.keys(ST.ser[dayKey]).forEach(exId => {
       Object.keys(ST.ser[dayKey][exId]).forEach(idx => {
@@ -224,6 +226,19 @@ function resetDay() {
     save();
     renderMain();
   }
+}
+
+function resetAll() {
+  if (!confirm('¿Reiniciar el estado de TODOS los días? Se desmarcarán todos los ejercicios de toda la rutina.')) return;
+  Object.keys(ST.ser).forEach(dayKey => {
+    Object.keys(ST.ser[dayKey]).forEach(exId => {
+      Object.keys(ST.ser[dayKey][exId]).forEach(idx => {
+        ST.ser[dayKey][exId][idx].done = false;
+      });
+    });
+  });
+  save();
+  renderMain();
 }
 
 function updateJSON() {
